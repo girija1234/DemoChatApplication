@@ -12,10 +12,8 @@ app.controller('loginController', ['$scope','$http','$location','$cookieStore',f
         this.username = '';
         this.password = '';
         this.contact = '';
-        this.gender = '';
-        this.maritalStatus = '';
         this.birthDate = '';
-        this.isActive = '';
+        this.isActive = false;
     }
 
     $scope.user = new User();
@@ -23,9 +21,9 @@ app.controller('loginController', ['$scope','$http','$location','$cookieStore',f
     $scope.createUser = function () {
         $http.post('/add', $scope.user).success(function (data) {
             $scope.users.push($scope.user);
+            $scope.termsncond = '';
             $scope.user = new User();
             $cookieStore.put('currUser', data.currUser);
-            $location.path('/home');
         });
     }
 
