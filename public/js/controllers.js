@@ -3,7 +3,7 @@
 var current_username;
 
 /* Controllers */
-app.controller('loginController', ['$scope','$http','$location','$cookieStore',function($scope,$http,$location,$cookieStore) {
+app.controller('loginController', ['$scope','$http','$location','$window','$cookieStore',function($scope,$http,$location,$window,$cookieStore) {
 
 
     function User() {
@@ -12,10 +12,8 @@ app.controller('loginController', ['$scope','$http','$location','$cookieStore',f
         this.username = '';
         this.password = '';
         this.contact = '';
-        this.gender = '';
-        this.maritalStatus = '';
         this.birthDate = '';
-        this.isActive = '';
+        this.isActive = false;
     }
 
     $scope.user = new User();
@@ -23,9 +21,10 @@ app.controller('loginController', ['$scope','$http','$location','$cookieStore',f
     $scope.createUser = function () {
         $http.post('/add', $scope.user).success(function (data) {
             $scope.users.push($scope.user);
+            $scope.termsncond = '';
             $scope.user = new User();
             $cookieStore.put('currUser', data.currUser);
-            $location.path('/home');
+
         });
     }
 
@@ -34,13 +33,15 @@ app.controller('loginController', ['$scope','$http','$location','$cookieStore',f
             $cookieStore.put('currUser', data.currUser);
             $scope.users.push($scope.loginuser);
             $scope.loginuser = '';
-            $location.path('/home');
+            var baseUrl = $window.location;
+            $window.location.href =  baseUrl+'home';
+
         });
     }
 }]);
 
 
-app.controller('ChartController', ['$scope','$http','$routeParams','$location','socket','$cookieStore',function($scope,$http,$routeParams,$location,socket,$cookieStore) {
+app.controller('ChartController', ['$scope','$http','$routeParams','$location','$window','socket','$cookieStore',function($scope,$http,$routeParams,$location,$window,socket,$cookieStore) {
     $scope.status;
     $scope.allusersList;
     getAllUsersList();

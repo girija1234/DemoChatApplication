@@ -16,7 +16,7 @@ var userSchema = new Schema({
     password: { type: String, required: true },
     contact: { type: String, required: true },
     birthDate: { type: String, required: true },
-    isActive: { type: String, required: true }
+    isActive: { type: String}
 
 });
 var msgSchema = new Schema({
@@ -40,8 +40,17 @@ exports.findUser = function(req, res) {
     var username = req.body.username;
     var password = req.body.password;
     User.find({username: username,password: password}, function(error, currUser) {
-        if(error) res.send(500);
+        if(error)res.send(500);
+        User.find({username: username,password: password})
+        .update({isActive:'true'},function(error, message) {
+            if(error) res.send(500);
+            //res.send(201);
+            res.json({ message: message });
+        });
+
         res.json({ currUser: currUser });
+
+
     });
 };
 exports.findAllUser = function(req, res) {

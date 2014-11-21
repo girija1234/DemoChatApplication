@@ -50,7 +50,7 @@ html(ng-app="myApp")
                         //input.form-control(type='text',ng-model="chat.user.maritalStatus" , name="maritalStatus",placeholder='Single/Married', value='SINGLE')
                         input.form-control(type='text', ng-model="user.birthDate" ,name="birthDate",placeholder='DOB ( yyyy-mm-dd )', value='2014-10-10')
                         br
-                        input.form-control.radioMrgn(type='checkbox',ng-model="user.isActive" , name="isActive")span Term & Condition
+                        input.form-control.radioMrgn(type='checkbox',ng-model="termsncond.tc" , name="tc")span Term & Condition
                         .blank
                     button.btn.btn-default(type='submit',ng-click="createUser()") Sign Up
                     &nbsp;
